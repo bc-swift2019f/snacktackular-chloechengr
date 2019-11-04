@@ -8,6 +8,7 @@
 
 import UIKit
 import GooglePlaces
+import MapKit
 
 class SpotDetailViewController: UIViewController {
     
@@ -16,22 +17,38 @@ class SpotDetailViewController: UIViewController {
     @IBOutlet weak var averageRatingLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var saveBarButton: UIBarButtonItem!
+    @IBOutlet weak var cancelBarButton: UIBarButtonItem!
     
     var spot: Spot!
+    let regionDistance: CLLocationDistance = 750 // 750 meters, or about a half mile
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if spot == nil {
+//        mapView.delegate = self
+        
+        if spot == nil { // We are adding a new record, fields should be editable
             spot = Spot()
+            
         }
-        nameField.text = spot.name
-        addressField.text = spot.address
+        
+        let region = MKCoordinateRegion(center: spot.coordinate, latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
+        mapView.setRegion(region, animated: true)
+        updateUserInterface()
     }
     
     func updateUserInterface() {
         nameField.text = spot.name
         addressField.text = spot.address
+        updateMap()
+    }
+    
+    func updateMap() {
+        mapView.removeAnnotations(mapView.annotations)
+        mapView.addAnnotation(spot)
+        mapView.setCenter(spot.coordinate, animated: true)
     }
     
     func leaveViewController() {
