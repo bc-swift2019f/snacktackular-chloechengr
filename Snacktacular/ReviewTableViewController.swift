@@ -22,6 +22,16 @@ class ReviewTableViewController: UITableViewController {
     @IBOutlet weak var buttonsBackgroundView: UIView!
     @IBOutlet var starButtonCollection: [UIButton]!
     
+    var rating = 0 {
+        didSet {
+            for starButton in starButtonCollection {
+                let image = UIImage(named: (starButton.tag < rating ? "star-filled": "star-empty"))
+                starButton.setImage(image, for: .normal)
+            }
+            print(">>> new Rating \(rating)")
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // hide keyboard if we tap outside of a field
@@ -38,6 +48,11 @@ class ReviewTableViewController: UITableViewController {
             navigationController?.popViewController(animated: true)
         }
     }
+    
+    @IBAction func starButtonPressed(_ sender: UIButton) {
+        rating = sender.tag + 1 //add one since we are zero indexed
+    }
+    
 
     @IBAction func returnTitleDonePressed(_ sender: UITextField) {
     }

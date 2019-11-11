@@ -487,26 +487,41 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="43" height="40"/>
                                                             <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <state key="normal" image="star-empty"/>
+                                                            <connections>
+                                                                <action selector="starButtonPressed:" destination="jpy-lw-Dnv" eventType="touchUpInside" id="hff-5V-751"/>
+                                                            </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ak6-2r-Kd3">
+                                                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ak6-2r-Kd3">
                                                             <rect key="frame" x="43" y="0.0" width="43.333333333333343" height="40"/>
                                                             <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <state key="normal" image="star-empty"/>
+                                                            <connections>
+                                                                <action selector="starButtonPressed:" destination="jpy-lw-Dnv" eventType="touchUpInside" id="foD-l6-NYB"/>
+                                                            </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lrI-Jg-YPQ">
+                                                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lrI-Jg-YPQ">
                                                             <rect key="frame" x="86.333333333333329" y="0.0" width="42.999999999999986" height="40"/>
                                                             <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <state key="normal" image="star-empty"/>
+                                                            <connections>
+                                                                <action selector="starButtonPressed:" destination="jpy-lw-Dnv" eventType="touchUpInside" id="IWf-wu-epW"/>
+                                                            </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="seU-BK-U7v">
+                                                        <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="seU-BK-U7v">
                                                             <rect key="frame" x="129.33333333333331" y="0.0" width="43.333333333333343" height="40"/>
                                                             <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <state key="normal" image="star-empty"/>
+                                                            <connections>
+                                                                <action selector="starButtonPressed:" destination="jpy-lw-Dnv" eventType="touchUpInside" id="LJq-Vj-jXl"/>
+                                                            </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CL7-xc-E9c">
+                                                        <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CL7-xc-E9c">
                                                             <rect key="frame" x="172.66666666666669" y="0.0" width="43.333333333333343" height="40"/>
                                                             <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <state key="normal" image="star-empty"/>
+                                                            <connections>
+                                                                <action selector="starButtonPressed:" destination="jpy-lw-Dnv" eventType="touchUpInside" id="eHl-8f-hud"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <constraints>
@@ -687,6 +702,11 @@
                         <outlet property="reviewTextView" destination="c6H-W9-Rpn" id="vBb-7b-Qqd"/>
                         <outlet property="reviewTitleField" destination="n6X-oE-0Og" id="Z97-zr-KCv"/>
                         <outlet property="saveBarButton" destination="RUm-Y8-hDP" id="YFX-yW-fT4"/>
+                        <outletCollection property="starButtonCollection" destination="sDC-l5-k72" collectionClass="NSMutableArray" id="S0V-AG-799"/>
+                        <outletCollection property="starButtonCollection" destination="ak6-2r-Kd3" collectionClass="NSMutableArray" id="tD7-K3-8Vn"/>
+                        <outletCollection property="starButtonCollection" destination="lrI-Jg-YPQ" collectionClass="NSMutableArray" id="Q41-Lo-gUd"/>
+                        <outletCollection property="starButtonCollection" destination="seU-BK-U7v" collectionClass="NSMutableArray" id="Da6-Px-pIO"/>
+                        <outletCollection property="starButtonCollection" destination="CL7-xc-E9c" collectionClass="NSMutableArray" id="hX0-bH-q7D"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3np-Hp-t6l" userLabel="First Responder" sceneMemberID="firstResponder"/>
