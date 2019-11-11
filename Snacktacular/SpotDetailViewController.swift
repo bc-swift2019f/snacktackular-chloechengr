@@ -104,6 +104,7 @@ class SpotDetailViewController: UIViewController {
     }
     
     @IBAction func reviewButtonPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "AddReview", sender: nil)
     }
     
     @IBAction func lookUpPlacePressed(_ sender: UIBarButtonItem) {
