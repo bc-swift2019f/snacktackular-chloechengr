@@ -159,6 +159,7 @@ class SpotDetailViewController: UIViewController {
     }
     
     @IBAction func photoButtonPressed(_ sender: UIButton) {
+        cameraOrLibraryAlert()
     }
     
     @IBAction func reviewButtonPressed(_ sender: UIButton) {
