@@ -83,6 +83,10 @@ class SpotDetailViewController: UIViewController {
                 self.averageRatingLabel.text = "-.-"
             }
         }
+        
+        photos.loadData(spot: spot) {
+            self.collectionView.reloadData()
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -323,12 +327,8 @@ extension SpotDetailViewController: UINavigationControllerDelegate, UIImagePicke
         photo.image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
     
         dismiss(animated: true) {
-            photo.saveData(spot: self.spot, completed: { (success) in
-                if success {
-                    self.photos.photoArray.append(photo)
-                    self.collectionView.reloadData()
-                }
-            })
+            photo.saveData(spot: self.spot) { (success) in
+            }
         }
     }
     
