@@ -73,17 +73,17 @@ class SpotDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         reviews.loadData(spot: spot) {
             self.tableView.reloadData()
             if self.reviews.reviewArray.count > 0 {
+                // smaller code with .reduce
                 let average = Double(self.reviews.reviewArray.reduce(0, {$0 + $1.rating})) / Double(self.reviews.reviewArray.count)
                 self.averageRatingLabel.text = "\(average.roundTo(places: 1))"
             } else {
                 self.averageRatingLabel.text = "-.-"
             }
         }
-        
+
         photos.loadData(spot: spot) {
             self.collectionView.reloadData()
         }
