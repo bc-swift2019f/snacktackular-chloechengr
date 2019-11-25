@@ -28,6 +28,7 @@ class SpotDetailViewController: UIViewController {
     let regionDistance: CLLocationDistance = 750 // 750 meters, or about a half mile
     var locationManager: CLLocationManager!
     var currentLocation: CLLocation!
+    var imagePicker = UIImagePickerController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +42,7 @@ class SpotDetailViewController: UIViewController {
         tableView.dataSource = self
         collectionView.delegate = self
         collectionView.dataSource = self
+        imagePicker.delegate = self
         
         if spot == nil { // We are adding a new record, fields should be editable
             spot = Spot()
@@ -98,7 +100,7 @@ class SpotDetailViewController: UIViewController {
             let destination = segue.destination as! ReviewTableViewController
             destination.spot = spot
             let selectedIndexPath = tableView.indexPathForSelectedRow!
-            destination.review = reviews.reviewarray[selectedIndexPath.row]
+            destination.review = reviews.reviewArray[selectedIndexPath.row]
         default:
             print("*** ERROR: Did not have a segue in SpotDetailViewController prepare(for segue:)")
         }
@@ -311,5 +313,40 @@ extension SpotDetailViewController: UICollectionViewDelegate, UICollectionViewDa
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! SpotPhotosCollectionViewCell
         cell.photo = photos.photoArray[indexPath.row]
         return cell
+    }
+}
+
+extension SpotDetailViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let photo = Photo()
+        photo.image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+    
+        dismiss(animated: true) {
+            photo.saveData(spot: self.spot, completed: { (success) in
+                if success {
+                    self.photos.photoArray.append(photo)
+                    self.collectionView.reloadData()
+                }
+            })
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func accessLibrary() {
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func accessCamera() {
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            imagePicker.sourceType = .camera
+            present(imagePicker, animated: true, completion: nil)
+        } else {
+            showAlert(title: "Camera Not Available", message: "There is no camera available on this device.")
+        }
     }
 }
