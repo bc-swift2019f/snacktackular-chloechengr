@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ReviewTableViewController: UITableViewController {
 
@@ -24,6 +25,7 @@ class ReviewTableViewController: UITableViewController {
     
     var spot: Spot!
     var review: Review!
+    let dateFormatter = DateFormatter()
     var rating = 0 {
         didSet {
             for starButton in starButtonCollection {
@@ -50,6 +52,69 @@ class ReviewTableViewController: UITableViewController {
         if review == nil {
             review = Review()
         }
+        updateUserInterface()
+    }
+    
+    func updateUserInterface() {
+        nameLabel.text = spot.name
+        addressLabel.text = spot.address
+        rating = review.rating
+        reviewTitleField.text = review.title
+        enableDisableSaveButton()
+        reviewTextView.text = review.text
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        reviewDateLabel.text = "posted: \(dateFormatter.string(from: review.date))"
+        if review.documentID == "" { // This is a new review
+            addBordersToEditableObjects()
+        } else {
+            if review.reviewerUserID == Auth.auth().currentUser?.email { // This review was posted by current user
+                self.navigationItem.leftItemsSupplementBackButton = false
+                saveBarButton.title = "Update"
+                addBordersToEditableObjects()
+                deleteButton.isHidden = false
+            } else { // This review was posted by another user
+                cancelBarButton.title = ""
+                saveBarButton.title = ""
+                postedByLabel.text = "Posted by: \(review.reviewerUserID)"
+                // disable stars
+                for starButton in starButtonCollection {
+                    starButton.backgroundColor = UIColor.white
+                    starButton.adjustsImageWhenDisabled = false
+                    starButton.isEnabled = false
+                    reviewTitleField.isEnabled = false
+                    reviewTextView.isEditable = false
+                    reviewTitleField.backgroundColor = UIColor.white
+                    reviewTextView.backgroundColor = UIColor.white
+                }
+            }
+        }
+    }
+    
+    func addBordersToEditableObjects() {
+        reviewTitleField.addBorder(width: 0.5, radius: 5.0, color: .black)
+        reviewTextView.addBorder(width: 0.5, radius: 5.0, color: .black)
+        buttonsBackgroundView.addBorder(width: 0.5, radius: 5.0, color: .black)
+    }
+    
+    func enableDisableSaveButton() {
+        if reviewTitleField.text != "" {
+            saveBarButton.isEnabled = true
+        } else {
+            saveBarButton.isEnabled = false
+        }
+    }
+    
+    func saveThenSegue() {
+        review.title = reviewTitleField.text!
+        review.text = reviewTextView.text!
+        review.saveData(spot: spot) { (success) in
+            if success {
+                self.leaveViewController()
+            } else {
+                print("*** ERROR: Couldn't leave this view controller because data wasn't saved.")
+            }
+        }
     }
     
     func leaveViewController() {
@@ -67,24 +132,18 @@ class ReviewTableViewController: UITableViewController {
     
 
     @IBAction func returnTitleDonePressed(_ sender: UITextField) {
+        saveThenSegue()
     }
     
     @IBAction func reviewTitleChanged(_ sender: UITextField) {
+        enableDisableSaveButton()
     }
     
     @IBAction func deleteButtonPressed(_ sender: UIButton) {
     }
     
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
-        review.title = reviewTitleField.text!
-        review.text = reviewTextView.text!
-        review.saveData(spot: spot) { (success) in
-            if success {
-                self.leaveViewController()
-            } else {
-                print("*** ERROR: Couldn't leave this view controller because data wasn't saved.")
-            }
-        }
+        saveThenSegue()
     }
     
     @IBAction func cancalButtonPressed(_ sender: UIBarButtonItem) {
